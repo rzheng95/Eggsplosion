@@ -1,0 +1,56 @@
+plugins {
+    id 'java'
+    id 'eclipse'
+    id 'maven'
+    id 'net.minecrell.plugin-yml.bukkit' version '0.3.0'
+}
+
+group = 'com.rzheng'
+version = '0.0.1'
+description = 'A plugin for throwing explosive eggs'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+}
+
+dependencies {
+    compileOnly 'org.spigotmc:spigot-api:1.13.2-R0.1-SNAPSHOT'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+bukkit {
+    name = 'Eggsplosion'
+    version = version
+    description = description
+    author = 'Richard Zheng'
+
+    main = 'com.rzheng.eggsplosion.EggsplosionMain'
+    apiVersion = '1.13'
+
+    commands {
+        ep {
+            description = "ep = Eggsplosion"
+        }
+    }
+}
+
+jar {
+    baseName = project.name
+    manifest {
+        attributes 'Implementation-Version': version, 'Specification-Version': version
+    }
+}
+
+build {
+    dependsOn clean
+    dependsOn jar
+    jar.mustRunAfter clean
+}
