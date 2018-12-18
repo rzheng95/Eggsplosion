@@ -5,19 +5,20 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileHitEvent;
 
+import com.rzheng.eggsplosion.managers.ConfigManager;
+
 public class EggListener implements Listener
 {
 
 	@EventHandler
 	public void onProjectileHitEvent(ProjectileHitEvent e)
 	{
-		EggSettings setting = new EggSettings();
 		if(e.getEntity().getType() == EntityType.EGG)
 		{
 			if(e.getHitBlock() != null)
-				e.getHitBlock().getWorld().createExplosion(e.getHitBlock().getLocation(), setting.getPower(), setting.getOnFire());
+				e.getHitBlock().getWorld().createExplosion(e.getHitBlock().getLocation(), ConfigManager.getInstance().getPower(), ConfigManager.getInstance().getOnFire());
 			else
-				e.getHitEntity().getWorld().createExplosion(e.getHitEntity().getLocation(), setting.getPower(), setting.getOnFire());
+				e.getHitEntity().getWorld().createExplosion(e.getHitEntity().getLocation(), ConfigManager.getInstance().getPower(), ConfigManager.getInstance().getOnFire());
 
 		}
 	}
